@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>跑马灯案列</title>
+
+		<script src="js/vue.js"></script>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+			<input type="button" @click="start" value="开始" />
+			<input type="button" @click="end" value="结束" />
+			<div v-text="msg"></div>			
+		</div>
+	</body>
+
+	<script>
+		var vu = new Vue({
+			el: "#app",
+			data: {
+				msg: "这是一个vue文件!  ",
+				setInterval:null
+			},
+			methods:{
+				start(){
+					if(this.setInterval != null) return;
+					this.setInterval =  setInterval(() => {
+						let a =  this.msg.substring(0,1);
+					    this.msg =  this.msg.substring(1)+a;
+					},100)
+				},
+				end(){
+					clearInterval(this.setInterval);
+					this.setInterval = null;
+				}
+			}
+		})
+	</script>
+
+</html>
