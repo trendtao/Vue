@@ -12,7 +12,7 @@
 		<div id="app">
 			<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title">添加商品</h3>
+		        <h3 class="panel-title" v-fontcolor="'black'">添加商品</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<form class="form-inline" role="form">
@@ -23,10 +23,15 @@
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  <div class="form-group">
 				  	<label for="name">商品名：</label>
-				    <input type="text" class="form-control" id="name" placeholder="请输入商品名" v-model="name">
+				    <input type="text" class="form-control" id="name" placeholder="请输入商品名" v-model="name" @click.enter="add">
 				  </div>
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  <button type="submit" class="btn btn-default" @click.prevent="add">提交</button>
+				   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  <div class="form-group">
+				  	<label for="name">搜索：</label>
+				    <input type="text" class="form-control" id="name" placeholder="请输入商品名" v-model="keywords" v-focus="'blue'">
+				  </div>
 				</form>
 		    </div>
 		</div>
@@ -40,10 +45,10 @@
 			        <th>操作</th></tr>
 			    </thead>
 			    <tbody>
-			      <tr v-for="item in list" :key="item.id">
+			      <tr v-for="item in search(keywords)" :key="item.id">
 			        <td>{{item.id}}</td>
 			        <td>{{item.name}}</td>
-			        <td>{{item.date}}</td>
+			        <td>{{item.date | dateFormat("")}}</td>
 			        <td><a @click.prevent="del(item.id)">删除</a> </td>
 			      </tr>
 			    </tbody>
@@ -52,11 +57,41 @@
 		</div>
 	</body>
 	<script>
+		
+		//自定义全局过滤器
+		Vue.filter("dateFormat",function(date,format="yyyy-MM-dd"){
+			let newdate =  new Date(date)
+			var year = newdate.getFullYear()
+			var month = (newdate.getMonth()+1).toString().padStart(2,"0")
+			var day = newdate.getDate().toString().padStart(2,"0")
+			var hour = newdate.getHours().toString().padStart(2,"0");
+			var min = newdate.getMinutes().toString().padStart(2,"0"); 
+			var sec = newdate.getSeconds().toString().padStart(2,"0");
+			
+			if(format=="yyyy-MM-dd"){
+				return year+"-"+month+"-"+day
+			}else{
+				return year+"-"+month+"-"+day+" "+hour+":"+min+":"+sec
+			}
+		})
+		
+		//自定义全局指令
+		Vue.directive("focus",{
+			bind:function(el,binding){
+				el.style.color=binding.value
+			},
+			inserted:function(el,binding){
+				el.focus();
+			}
+		})
+		
+		
 		new Vue({
 			el:"#app",
 			data:{
 				id:"",
 				name:"",
+				keywords:"",
 				list:[
 					{id:1,name:"宝马",date:new Date()},
 					{id:2,name:"特拉斯",date:new Date()},
@@ -66,17 +101,44 @@
 			},
 			methods:{
 				add(){
+					if(this.name.length==0 || this.id.length==0){
+						alert("请填写名字")
+						return;
+					}
 					let da = {id:this.id,name:this.name,date:new Date()}
 					this.list.push(da)
 					this.id = this.name = '';
 				},
 				del(id){
+//					this.list.some((item,i) => {
+//						if(item.id == id){
+//							this.list.splice(i,1);
+//							return true;
+//						}
+//					})
+					
+					var index = this.list.findIndex((item) => {
+						if(item.id == id)
+						return true;
+					})
+					this.list.splice(index,1)
+	
+				},
+				search(word){
+					var newList = [];
 					this.list.some((item,i) => {
-						if(item.id == id){
-							this.list.splice(i,1);
-							return true;
+						if(item.name.indexOf(word) != -1){
+							newList.push(item)
 						}
 					})
+					return newList;
+					
+					
+				}
+			},
+			directives:{
+				'fontcolor':function(el,binding){ //该方法相当于写到bind，update方法里面去
+					el.style.color=binding.value
 				}
 			}
 			
