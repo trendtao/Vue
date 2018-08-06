@@ -1,27 +1,92 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<script type="text/javascript" src="../js/vue.js" ></script>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-	</head>
-	<body>
-		<div id="app">
-			
-			
-			
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+</head>
+
+<body>
+	<div id="app">
+		<comm @func="initData" v-bind:parentname="name"></comm>
+		<ul class="list-group" v-for="(item, index) in list" :key="item.id">
+			<li class="list-group-item">{{item.id}} --- {{item.msg}} --- {{item.person}}</li>
+		</ul>
+
+	</div>
+
+
+	<template id="comm">
+		<div>
+			<h1>{{parentname}}</h1>
+			<br>
+			<div class="form-group">
+				<label for="name">评论人</label>
+				<input type="text" class="form-control" placeholder="评论人" v-model="person">
+			</div>
+			<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="name">评论信息</label>
+				<textarea v-model="msg" class="form-control"></textarea>
+			</div>
+			<button type="submit" class="btn btn-default" @click.prevent="add">提交</button>
+			<br>
 		</div>
-		
-		<script>
-			var vm = new Vue({
-				el:"#app",
-				data:{
-					
+	</template>
+
+	<script>
+		var comm = {
+			template: "#comm",
+			props:[
+				"parentname"
+			],
+			data() {
+				return {
+					msg: '',
+					person: ''
 				}
-			})
-			
-		</script>
-		
-	</body>
+			},
+			methods: {
+				add() {
+					var v = { id: Date.now(), msg: this.msg, person:this.person}
+					var listStr = localStorage.getItem("list");
+					var list =  JSON.parse(listStr || "[]");
+					list.unshift(v);
+					localStorage.setItem("list",JSON.stringify(list))
+					this.msg = this.person = ""	
+					this.$emit("func")
+
+				}
+			}
+		}
+
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				list: [
+					{ id: 1, msg: "宝马", person: "张三" },
+					{ id: 2, msg: "现代", person: "李四" },
+					{ id: 3, msg: "凯迪拉克", person: "王五" }
+				],
+				name:"这是父组件向子组件传递的值"
+			},
+			created() {
+				this.initData();
+			},
+			methods:{
+				initData(){
+					this.list =  JSON.parse(localStorage.getItem("list"))
+				}
+			},
+			components: {
+				"comm": comm
+			}
+		})
+
+	</script>
+
+</body>
+
 </html>
