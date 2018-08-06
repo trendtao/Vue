@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<link rel="stylesheet" href="../css/animate.css" />
+	</head>
+	<body>
+		<div id="app">
+			<input type="button" @click="flag = !flag" value="显示动画"/>
+			<transition  enter-active-class="animated tada"
+    					leave-active-class="animated bounceOutRight" :duration="1000">
+				<h1 v-if="flag">这是引用animate动画</h1>
+			</transition>
+		</div>
+		
+	</body>
+	
+	<script>
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				flag :false
+			}
+		})
+		
+		
+	</script>
+	
+</html>
