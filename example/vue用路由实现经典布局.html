@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>vue路由案列</title>
+    <link href="../css/animate.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+</head>
+<style>
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    .head{
+        height: 100px;
+        background-color: brown;
+        font-size: 20px;
+    }
+
+    .left{
+       flex: 2;
+       background-color: aqua;
+       
+    }
+
+    .right{
+        flex: 8;
+        background-color: red;
+    }
+    .container{
+        display: flex;
+        height: 100%;
+    }
+</style>
+<body>
+    <div id="app">
+        <router-view name="head"></router-view>
+        <div class="container">
+                <router-view name="left"></router-view>
+                <router-view name="right"></router-view>
+        </div>
+    </div>
+</body>
+<script>
+
+    var head = {
+        template:"<div class='head'> <h1>头部</h1></div>"
+    }
+    var left = {
+        template:"<div class='left'> <h1>左边</h1></div>"
+    }
+    var right = {
+        template:"<div class='right'> <h1>右边</h1></div>"
+    }
+
+
+    const routes = [{
+                path:"/",
+                components:{
+                head,
+                left,
+                right
+            }
+        },
+    ]
+
+    const router = new VueRouter({
+        routes
+    })
+
+    var vm = new Vue({
+        el:"#app",
+        router
+    })
+
+</script>
+
+</html>

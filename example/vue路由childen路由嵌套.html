@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>vue路由childen路由嵌套</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/account">进入账户</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="account">
+        <div>
+                <h1>账户模块</h1>
+                <router-link to="/account/login">登录</router-link>
+                <router-link to="/account/register">注册</router-link>
+                <router-view></router-view>
+        </div>
+    </template>
+
+</body>
+
+<script>
+
+    var login = {
+        template:"<h3>登录组件</h3>"
+    }
+
+    var register = {
+        template:"<h3>注册组件</h3>"
+    }
+
+    var account = {
+        template:"#account"
+    }
+
+    var routes = [
+        {
+            path:"/account",
+            component:account,
+            children:[
+                {path:"login",component:login},
+                {path:"register",component:register},
+            ]
+        },
+    ]
+
+    var router = new VueRouter({
+        routes,
+    })
+
+    var vm =  new Vue({
+        el:"#app",
+        data:{
+
+        },
+        router
+
+    })
+</script>
+
+</html>
