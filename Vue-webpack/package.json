@@ -1,0 +1,24 @@
+{
+  "name": "package-json",
+  "version": "1.0.0",
+  "description": "Vue之webpack学习",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "_jquery@3.3.1@jquery": "^3.3.1",
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trendtao/Vue.git"
+  },
+  "author": "trendtao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trendtao/Vue/issues"
+  },
+  "homepage": "https://github.com/trendtao/Vue#readme"
+}
