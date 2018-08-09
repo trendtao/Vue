@@ -1,2 +1,0 @@
-1、在当前目录下创建dist，src文件夹，webpack。config.js文件
-2、切换到src目录下，创建web工程目录，以及一个main.js

@@ -1,0 +1,8 @@
+1、在当前目录下创建dist，src文件夹，webpack。config.js文件
+2、切换到src目录下，创建web工程目录，以及一个main.js
+3、在webpack.config.js些配置
+4、装webpack命令：cnpm i webpack@3.3.6 -g(全局安装)
+5、再装webpack-dev-server插件，实现自动部署，自动编译，自动启动浏览运行，以及和端口号
+6、配置html-webpack-plugin，命令: cnpm i html-webpack-plugin -d  这个插件主要是用来渲染页面的，然后加载到内存里面去
+7、配置loader加载器（css, less, sass..）
+8、配置css样式加载器： cnpm i style-loader css-loader -d

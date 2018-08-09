@@ -4,12 +4,17 @@
   "description": "Vue之webpack学习",
   "main": "webpack.config.js",
   "dependencies": {
-    "_jquery@3.3.1@jquery": "^3.3.1",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "html-webpack-plugin":"^3.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-dev-server": "2.9.3",
+    "webpack":"^3.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev2":"webpack-dev-server --open --port 3000 --contentBase src --hot",
+    "dev":"webpack-dev-server"
   },
   "repository": {
     "type": "git",
