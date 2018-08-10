@@ -6,3 +6,17 @@
 6、配置html-webpack-plugin，命令: cnpm i html-webpack-plugin -d  这个插件主要是用来渲染页面的，然后加载到内存里面去
 7、配置loader加载器（css, less, sass..）
 8、配置css样式加载器： cnpm i style-loader css-loader -d
+9、如果js里面引用了面对对象的关键字，就要使用babel加载器
+10、babel加载器命令： cnpm i babel-core babel-loader babel-plugin-transform-runtime -d
+                     cnpm i babel-preset-env babel-preset-stage-0 -d
+    然后在webpack.config.js的plugins的填写 { test: /\.js$/, use: "babel-loader", exclude: /node_modules/ }
+    最后创建一个.babelrc文件，写入以下内容：
+    {
+        "presets": [
+            "env","stage-0"
+        ],
+        "plugins": [
+            "transform-runtime"
+        ]
+    }
+
